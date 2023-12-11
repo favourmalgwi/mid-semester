@@ -1,0 +1,56 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+// Structure to represent a node
+typedef struct Node {
+  double data;
+  struct Node* next;
+} Node;
+
+// Function to allocate memory for a new node
+Node* newNode(double data) {
+  Node* new_node = (Node*)malloc(sizeof(Node));
+  if (!new_node) {
+    printf("Memory allocation failed!\n");
+    exit(1);
+  }
+  new_node->data = data;
+  new_node->next = NULL;
+  return new_node;
+}
+
+// Push function to push an element to the stack
+void push(Node** head, double data) {
+  // Allocate memory for a new node
+  Node* new_node = newNode(data);
+
+  // Make next of new node as head
+  new_node->next = *head;
+
+  // Move head to point to the new node
+  *head = new_node;
+}
+
+// Print the stack
+void printStack(Node* head) {
+  printf("Stack: ");
+  while (head) {
+    printf("%.2lf -> ", head->data);
+    head = head->next;
+  }
+  printf("NULL\n");
+}
+
+int main() {
+  Node* head = NULL; // Initially, the stack is empty
+
+  // Push elements to the stack
+  push(&head, 1.23);
+  push(&head, 4.56);
+  push(&head, 7.89);
+
+  // Print the stack
+  printStack(head);
+
+  return 0;
+}
